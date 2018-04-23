@@ -24,6 +24,17 @@ body {
   width: 100%;
 }
 
+/* build out animation */
+.open {
+  transition: 1000ms;
+  transform: rotateY(0);
+  background-color: purple;
+}
+
+.show {
+  background-color: blue;
+}
+
 #card1 { grid-area = card1; }
 #card2 { grid-area = card2; }
 #card3 { grid-area = card3; }
