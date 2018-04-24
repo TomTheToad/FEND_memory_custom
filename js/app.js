@@ -5,7 +5,10 @@ function GameItem(name, icon) {
   this.icon = icon;
   this.getHTML = function() {
     return `<div class="card" id="${this.name}">
-      ${this.icon}
+      <div class="card-container">
+        <img class="card-top" src="../images/eyes.png" alt="top">
+        <img class="card-bottom" src="../images/${this.icon}" alt="hidden">
+      </div>
     </div>`;
   }
 }
@@ -21,17 +24,23 @@ let previouslySelectedCard;
 // TODO: add image sets for themes
 // TODO: only 8 image items, make pairs
 const itemImages = [
-  "item0", "item1", "item2", "item3",
+  "robotBg.png", "item1", "item2", "item3",
   "item4", "item5", "item6", "item7",
   "item0", "item1", "item2", "item3",
   "item4", "item5", "item6", "item7",
+];
+const itemImages2 = [
+  "robotBg.png", "robotBg.png", "robotBg.png", "robotBg.png",
+  "robotBg.png", "robotBg.png", "robotBg.png", "robotBg.png",
+  "robotBg.png", "robotBg.png", "robotBg.png", "robotBg.png",
+  "robotBg.png", "robotBg.png", "robotBg.png", "robotBg.png",
 ];
 
 // Populate gameItems
 function createGameItems() {
   for (let i = 0; i < gridSize; i++) {
     // create the new gameItems
-    const newGameItem = new GameItem(`card${i}`, itemImages[i]);
+    const newGameItem = new GameItem(`card${i}`, itemImages2[i]);
     gameItems.push(newGameItem);
   }
 }
@@ -75,29 +84,29 @@ function checkMatchCount() {
 }
 
 function checkSelectedMatch(card) {
-  if (previouslySelectedCard.innerHTML === card.innerHTML) {
+  if (previouslySelectedCard[0].innerHTML === card[0].innerHTML) {
     console.log("We have a match!");
-    previouslySelectedCard.classList.toggle('show');
-    card.classList.toggle('show');
+    previouslySelectedCard[1].classList.toggle('card-top-hide');
+    card[1].classList.toggle('card-top-hide');
     matchCount++;
     checkMatchCount();
   } else {
     console.log("No match!");
-    previouslySelectedCard.classList.toggle('open');
-    card.classList.toggle('open');
+    previouslySelectedCard[1].classList.toggle('card-open');
+    card[1].classList.toggle('card-open');
   }
   previouslySelectedCard = undefined;
 }
 
 // TODO: is this better than an anonymous function?
 function cardSelected(card){
-  if (card.classList.contains('show') || checkMatchCount() == true) {
+  if (card[0].classList.contains('card-bottom-show') || checkMatchCount() == true) {
     return
-  } else if (previouslySelectedCard != undefined && previouslySelectedCard.id != card.id) {
-    card.classList.toggle("open");
+  } else if (previouslySelectedCard != undefined && previouslySelectedCard.id != card[0].id) {
+    card[1].classList.toggle("card-open");
     checkSelectedMatch(card);
   } else {
-    card.classList.toggle("open");
+    card[1].classList.toggle("card-open");
     previouslySelectedCard = card;
   }
 }
@@ -105,8 +114,9 @@ function cardSelected(card){
 function addEventListenersToCards() {
   for (let i = 0; i < gridSize; i++) {
     let card = document.querySelector(`#card${i}`);
+    let cardTop = document.querySelector(`#card${i} img[class="card-top"]`);
     card.addEventListener('click', function(){
-      cardSelected(card);
+      cardSelected([card, cardTop]);
     });
   }
 }
