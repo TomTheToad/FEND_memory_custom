@@ -1,3 +1,30 @@
+// Themes
+// TODO: add image sets for themes
+// TODO: only 8 image items, make pairs
+
+const carnivalTheme = {
+  images: [
+    "carnival/adventure-amusement-park-carnival-460055.jpg",
+    "carnival/amusement-background-carnival-220137.jpg",
+    "carnival/amusement-park-art-bright-137032.jpg",
+    "carnival/amusement-park-background-bright-207248.jpg",
+    "carnival/amusement-park-blue-sky-bottom-view-784727.jpg",
+    "carnival/blur-candies-close-up-618918.jpg",
+    "carnival/blur-carnival-carousel-225238.jpg",
+    "carnival/carnival-cartoon-character-disney-203561.jpg",
+  ],
+  backgroundImage: "carnival/photo-1514031231291-fee925070a61.jpg",
+  cardFront: "carnival/card-front-kevin-jarrett-561805-unsplash.jpg"
+};
+
+// Fields
+let matchCount = 0;
+let selectedTheme = carnivalTheme;
+let gameItems = [];
+
+// selected card
+let previouslySelectedCard;
+
 // gameItem constructor
 // TODO: move this to it's own file and include
 function GameItem(name, icon) {
@@ -6,41 +33,26 @@ function GameItem(name, icon) {
   this.getHTML = function() {
     return `<div class="card" id="${this.name}">
       <div class="card-container">
-        <img class="card-top" src="../images/eyes.png" alt="top">
-        <img class="card-bottom" src="../images/${this.icon}" alt="hidden">
+        <img class="card-top" src="../images/themes/${selectedTheme.cardFront}" alt="top">
+        <img class="card-bottom" src="../images/themes/${this.icon}" alt="hidden">
       </div>
     </div>`;
   }
 }
 
-// Fields
-let gridSize = 16;
-let matchCount = 0;
-let gameItems = [];
-
-// selected card
-let previouslySelectedCard;
-
-// TODO: add image sets for themes
-// TODO: only 8 image items, make pairs
-const itemImages = [
-  "robotBg.png", "item1", "item2", "item3",
-  "item4", "item5", "item6", "item7",
-  "item0", "item1", "item2", "item3",
-  "item4", "item5", "item6", "item7",
-];
-const itemImages2 = [
-  "robotBg.png", "robotBg.png", "robotBg.png", "robotBg.png",
-  "robotBg.png", "robotBg.png", "robotBg.png", "robotBg.png",
-  "robotBg.png", "robotBg.png", "robotBg.png", "robotBg.png",
-  "robotBg.png", "robotBg.png", "robotBg.png", "robotBg.png",
-];
-
 // Populate gameItems
-function createGameItems() {
-  for (let i = 0; i < gridSize; i++) {
+function createGameItems(array) {
+  let index;
+  // allow for duplicate items without array duplicates
+  arraySize = array.length;
+  for (let i = 0; i < (array.length * 2); i++) {
+    index = i;
     // create the new gameItems
-    const newGameItem = new GameItem(`card${i}`, itemImages2[i]);
+    if (i >= arraySize) {
+      index = i - arraySize;
+    }
+    console.log(`index: ${index}`);
+    const newGameItem = new GameItem(`card${i}`, array[index]);
     gameItems.push(newGameItem);
   }
 }
@@ -76,7 +88,7 @@ function dealDeck() {
 }
 
 function checkMatchCount() {
-  if (matchCount === gameItems.length / 2) {
+  if (matchCount === selectedTheme.images.length / 2) {
     console.log("Winner!");
     return true
   }
@@ -112,7 +124,7 @@ function cardSelected(card){
 }
 
 function addEventListenersToCards() {
-  for (let i = 0; i < gridSize; i++) {
+  for (let i = 0; i < (selectedTheme.images.length * 2); i++) {
     let card = document.querySelector(`#card${i}`);
     let cardTop = document.querySelector(`#card${i} img[class="card-top"]`);
     card.addEventListener('click', function(){
@@ -122,7 +134,7 @@ function addEventListenersToCards() {
 }
 
 function setUpGameBoard() {
-  createGameItems();
+  createGameItems(selectedTheme.images);
   shuffleDeck();
   dealDeck();
   addEventListenersToCards();
