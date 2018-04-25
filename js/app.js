@@ -51,7 +51,6 @@ function createGameItems(array) {
     if (i >= arraySize) {
       index = i - arraySize;
     }
-    console.log(`index: ${index}`);
     const newGameItem = new GameItem(`card${i}`, array[index]);
     gameItems.push(newGameItem);
   }
@@ -60,7 +59,6 @@ function createGameItems(array) {
 function createGameBoardHTML() {
   let html = "";
   for(let item of gameItems) {
-    console.log(item.name);
     html = html + item.getHTML();
   };
   return html;
@@ -88,7 +86,7 @@ function dealDeck() {
 }
 
 function checkMatchCount() {
-  if (matchCount === selectedTheme.images.length / 2) {
+  if (matchCount === selectedTheme.images.length) {
     console.log("Winner!");
     return true
   }
@@ -97,13 +95,12 @@ function checkMatchCount() {
 
 function checkSelectedMatch(card) {
   if (previouslySelectedCard[0].innerHTML === card[0].innerHTML) {
-    console.log("We have a match!");
     previouslySelectedCard[1].classList.toggle('card-top-hide');
     card[1].classList.toggle('card-top-hide');
     matchCount++;
+    console.log(matchCount);
     checkMatchCount();
   } else {
-    console.log("No match!");
     previouslySelectedCard[1].classList.toggle('card-open');
     card[1].classList.toggle('card-open');
   }
@@ -114,7 +111,7 @@ function checkSelectedMatch(card) {
 function cardSelected(card){
   if (card[0].classList.contains('card-bottom-show') || checkMatchCount() == true) {
     return
-  } else if (previouslySelectedCard != undefined && previouslySelectedCard.id != card[0].id) {
+  } else if (previouslySelectedCard != undefined && previouslySelectedCard[0].id != card[0].id) {
     card[1].classList.toggle("card-open");
     checkSelectedMatch(card);
   } else {
