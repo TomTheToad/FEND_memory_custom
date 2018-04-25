@@ -69,7 +69,7 @@ function createGameBoardHTML() {
 // orginal function here: Shuffle function from http://stackoverflow.com/a/2450976
 // This function was a given function in the Udacity starter code.
 function shuffleDeck() {
-    let currentIndex = gameItems.length, temporaryValue, randomIndex;
+    let currentIndex = selectedTheme.images.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
