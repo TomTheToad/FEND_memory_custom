@@ -109,7 +109,7 @@ function checkSelectedMatch(card) {
 
 // TODO: is this better than an anonymous function?
 function cardSelected(card){
-  if (card[0].classList.contains('card-bottom-show') || checkMatchCount() == true) {
+  if (card[1].classList.contains('card-top-hide') || checkMatchCount() == true) {
     return
   } else if (previouslySelectedCard != undefined && previouslySelectedCard[0].id != card[0].id) {
     card[1].classList.toggle("card-open");
@@ -123,6 +123,7 @@ function cardSelected(card){
 function addEventListenersToCards() {
   for (let i = 0; i < (selectedTheme.images.length * 2); i++) {
     let card = document.querySelector(`#card${i}`);
+    // TODO: add container css to #card to prevent second query?
     let cardTop = document.querySelector(`#card${i} img[class="card-top"]`);
     card.addEventListener('click', function(){
       cardSelected([card, cardTop]);

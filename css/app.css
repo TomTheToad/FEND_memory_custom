@@ -51,6 +51,13 @@ body {
   z-index: 1;
 }
 
+/* .card-top:focus {
+  transform: rotateY(80deg);
+  transform-origin: left;
+  transition-delay: 10ms;
+  transition: 1s;
+} */
+
 .card-top-hide {
   /* opacity instead of display none for some transition */
   transition: opacity 2s ease;
@@ -60,7 +67,7 @@ body {
 .card-open {
   transform: rotateY(80deg);
   transform-origin: left;
-  transition-delay: 10ms;
+  /* transition-delay: 10ms; */
   transition: 1s;
 }
 
