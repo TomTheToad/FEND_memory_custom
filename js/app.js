@@ -20,26 +20,40 @@ const carnivalTheme = {
 // Fields
 let matchCount = 0;
 let selectedTheme = carnivalTheme;
+// Store individual game items
+// A game item is an object
 let gameItems = [];
 
+// Stores the running active card list.
+// This is an attempt at creadting a queue
+// This allows for the edge case in which rapid clicking occurs.
+let activeCards = [];
+
+let clickedCards = [];
+
 // selected card
-let previouslySelectedCard;
+// let previouslySelectedCard;
 
 // gameItem constructor
 // TODO: move this to it's own file and include
-function GameItem(name, icon) {
-  this.name = name;
-  this.icon = icon;
+function GameItem(id, image) {
+  this.id = id;
+  this.image = image;
   this.getHTML = function() {
-    return `<div class="card" id="${this.name}">
-      <div class="card-container">
-        <img class="card-top" src="../images/themes/${selectedTheme.cardFront}" alt="top">
-        <img class="card-bottom" src="../images/themes/${this.icon}" alt="hidden">
+    return `<div class="card-container">
+      <div class="card" id="${this.id}">
+        <figure class="card-front">
+          <img src="../images/themes/${selectedTheme.cardFront}" alt="top">
+        </figure>
+        <figure class="card-back">
+          <img src="../images/themes/${this.image}" alt="hidden">
+        </figure>
       </div>
     </div>`;
   }
 }
 
+/* Game build functions */
 // Populate gameItems
 function createGameItems(array) {
   let index;
@@ -53,6 +67,7 @@ function createGameItems(array) {
     }
     const newGameItem = new GameItem(`card${i}`, array[index]);
     gameItems.push(newGameItem);
+    activeCards.push(newGameItem.id);
   }
 }
 
@@ -85,48 +100,96 @@ function dealDeck() {
   // console.log(`html: ${html}`);
 }
 
-function checkMatchCount() {
-  if (matchCount === selectedTheme.images.length) {
-    console.log("Winner!");
-    return true
+/* Card manipulation function */
+function showCard(card) {
+  if (!card.classList.contains("flipped")) {
+    card.classList.toggle("flipped");
+    console.log(`show card: ${card.id}`);
   }
-  return false
 }
 
-function checkSelectedMatch(card) {
-  if (previouslySelectedCard[0].innerHTML === card[0].innerHTML) {
-    previouslySelectedCard[1].classList.toggle('card-top-hide');
-    card[1].classList.toggle('card-top-hide');
-    matchCount++;
-    console.log(matchCount);
-    checkMatchCount();
-  } else {
-    previouslySelectedCard[1].classList.toggle('card-open');
-    card[1].classList.toggle('card-open');
+function hideCard(card) {
+  if (card.classList.contains("flipped")) {
+    card.classList.toggle("flipped");
+    console.log(`hiding ${card.id}`);
   }
-  previouslySelectedCard = undefined;
 }
 
-// TODO: is this better than an anonymous function?
-function cardSelected(card){
-  if (card[1].classList.contains('card-top-hide') || checkMatchCount() == true) {
-    return
-  } else if (previouslySelectedCard != undefined && previouslySelectedCard[0].id != card[0].id) {
-    card[1].classList.toggle("card-open");
-    checkSelectedMatch(card);
+function assignCardMatched(card) {
+  if (!card.classList.contains("card-matched")) {
+    card.classList.toggle("card-matched");
+  }
+}
+
+function hideCards(card1, card2) {
+  setTimeout( function(){
+    hideCard(card1)
+  }, 1000);
+  setTimeout( function(){
+    hideCard(card2)
+  }, 1000);
+}
+
+function removeCardFromPlay(card) {
+  let index = activeCards.indexOf('card.id');
+  if (index) {
+    activeCards.splice(index, 1);
+    console.log(`${card.id} removed from play`);
+  }
+}
+
+function checkForMatch() {
+  // "Take" the two top cards
+  let card1 = clickedCards.shift();
+  let card2 = clickedCards.shift();
+
+  console.log(`checking cards ${card1.id} and ${card2.id}`);
+  // Check to make sure the card has not been double clicked
+  if (card1.id === card2.id) {
+    hideCard(card1);
+  } else if (card1.childNodes[3].innerHTML === card2.childNodes[3].innerHTML) {
+    // assign matched
+    assignCardMatched(card1);
+    assignCardMatched(card2);
+    // remove the cards from active play
+    removeCardFromPlay(card1);
+    removeCardFromPlay(card2);
+    console.log(activeCards);
+    // check for win condition
+    if (activeCards.length === 0) {
+      console.log("WINNER!");
+    }
   } else {
-    card[1].classList.toggle("card-open");
-    previouslySelectedCard = card;
+    // TODO: return false might do the job
+    console.log("no match");
+    hideCards(card1, card2);
+  }
+}
+
+function cardClicked(card) {
+  console.log(`card clicked: ${card.id}`);
+  let index = activeCards.indexOf(`${card.id}`);
+  console.log(`index: ${index}`);
+
+  if (index !== null) {
+    clickedCards.push(card);
+    console.log(`card added to clickedCards ${card.id}`);
+    showCard(card);
+
+    if (clickedCards.length >= 2) {
+      console.log('checking for match');
+      checkForMatch();
+    }
   }
 }
 
 function addEventListenersToCards() {
   for (let i = 0; i < (selectedTheme.images.length * 2); i++) {
     let card = document.querySelector(`#card${i}`);
-    // TODO: add container css to #card to prevent second query?
-    let cardTop = document.querySelector(`#card${i} img[class="card-top"]`);
     card.addEventListener('click', function(){
-      cardSelected([card, cardTop]);
+      if (!card.classList.contains("card-matched")) {
+        cardClicked(card);
+      }
     });
   }
 }
@@ -139,4 +202,3 @@ function setUpGameBoard() {
 }
 
 setUpGameBoard();
-// flipCard('#card1');

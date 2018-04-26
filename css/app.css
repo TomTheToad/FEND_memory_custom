@@ -27,59 +27,67 @@ body {
   padding: 30px;
 }
 
+.card-container {
+  position: relative;
+  width: 125px;
+  height: 125px;
+  perspective: 400px;
+}
+
 .card {
-  /* background-color: lightblue; */
+  position: absolute;
   border: 2px solid blue;
   border-radius: 10px;
-  height: 125px;
-  width: 125px;
-  /* background-image: url("../images/eyes.png"); */
+  height: 100%;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 1s;
+  /* transform: rotateY(-180); */
 }
+
+.card.flipped {
+  transform: rotateY(180deg);
+  /* transition: transform: 5s; */
+}
+
+/* .card.open {
+  transform: rotateY(180deg);
+} */
+
+/* .card.closed {
+  transform: rotateY(180deg);
+} */
 
 .card img {
   border-radius: 8px;
-  top: 0;
-  left: 0;
+}
+
+.card figure {
+  margin: 0;
+  display: block;
   position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
 }
 
-.card-container {
-  position: relative;
+.card .card-back {
+  transform: rotateY(-180deg);
 }
 
-.card-top {
-  z-index: 1;
-}
-
-/* .card-top:focus {
-  transform: rotateY(80deg);
-  transform-origin: left;
-  transition-delay: 10ms;
-  transition: 1s;
+/* .card:focus {
+  transform: rotateY(180deg);
+  animation-direction: alternate;
 } */
-
-.card-top-hide {
-  /* opacity instead of display none for some transition */
-  transition: opacity 2s ease;
-  opacity: 0;
-}
-
-.card-open {
-  transform: rotateY(80deg);
-  transform-origin: left;
-  /* transition-delay: 10ms; */
-  transition: 1s;
-}
-
-/* .card-close {
-  transform: rotateY(-80deg);
-  transform-origin: left;
-  transition-delay: 10ms;
-  transition: 1s;
+/* .card.selected {
+  transform: rotateY(-180deg);
 } */
+.card.holdOpen {
+  backface-visibility: visible;
+}
 
-.card-bottom {
-  z-index: 0;
+.card-matched {
+  border-color: green;
 }
 
 #card1 { grid-area = card1; }
