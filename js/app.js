@@ -1,7 +1,10 @@
 // Themes
 // TODO: add image sets for themes
-// TODO: only 8 image items, make pairs
 
+
+/* Begin Theme Coding */
+
+// Theme packs //
 const carnivalTheme = {
   images: [
     "carnival/adventure-amusement-park-carnival-460055.jpg",
@@ -17,22 +20,11 @@ const carnivalTheme = {
   cardFront: "carnival/card-front-kevin-jarrett-561805-unsplash.jpg"
 };
 
-// Fields
-let matchCount = 0;
+/* End Theme Coding */
+/* Begin Game Constructors */
+
+// Fields - Themes //
 let selectedTheme = carnivalTheme;
-// Store individual game items
-// A game item is an object
-let gameItems = [];
-
-// Stores the running active card list.
-// This is an attempt at creadting a queue
-// This allows for the edge case in which rapid clicking occurs.
-let activeCards = [];
-
-let clickedCards = [];
-
-// selected card
-// let previouslySelectedCard;
 
 // gameItem constructor
 // TODO: move this to it's own file and include
@@ -52,6 +44,13 @@ function GameItem(id, image) {
     </div>`;
   }
 }
+
+/* End Game Custructors */
+/* Begin Game Setup */
+
+// Store individual game items
+// A game item is an object
+let gameItems = [];
 
 /* Game build functions */
 // Populate gameItems
@@ -99,6 +98,19 @@ function dealDeck() {
   targetClass.innerHTML = html;
   // console.log(`html: ${html}`);
 }
+
+/* End Game Build Functions */
+/* Begin Game logic */
+
+// Fields
+let matchCount = 0;
+let moveCount = 0;
+
+// Stores the running active card list.
+// This is an attempt at creating a queue
+// This allows for the edge case in which rapid card selection occurs.
+let activeCards = [];
+let clickedCards = [];
 
 /* Card manipulation function */
 function showCard(card) {
@@ -160,7 +172,6 @@ function checkForMatch() {
       console.log("WINNER!");
     }
   } else {
-    // TODO: return false might do the job
     console.log("no match");
     hideCards(card1, card2);
   }
@@ -194,6 +205,9 @@ function addEventListenersToCards() {
   }
 }
 
+/* End Game Logic */
+
+/* Runtime Function */
 function setUpGameBoard() {
   createGameItems(selectedTheme.images);
   shuffleDeck();
@@ -201,4 +215,6 @@ function setUpGameBoard() {
   addEventListenersToCards();
 }
 
+// TODO: Better name?
+/* Intialize Game */
 setUpGameBoard();

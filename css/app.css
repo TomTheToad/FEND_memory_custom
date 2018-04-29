@@ -75,17 +75,6 @@ body {
   transform: rotateY(-180deg);
 }
 
-/* .card:focus {
-  transform: rotateY(180deg);
-  animation-direction: alternate;
-} */
-/* .card.selected {
-  transform: rotateY(-180deg);
-} */
-.card.holdOpen {
-  backface-visibility: visible;
-}
-
 .card-matched {
   border-color: green;
 }
