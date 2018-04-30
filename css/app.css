@@ -46,17 +46,20 @@ body {
 }
 
 .card.flipped {
+  -ms-transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  -moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
   transform: rotateY(180deg);
-  /* transition: transform: 5s; */
 }
 
-/* .card.open {
-  transform: rotateY(180deg);
-} */
-
-/* .card.closed {
-  transform: rotateY(180deg);
-} */
+.card .card-back {
+  -ms-transform: rotateY(-180deg);
+  -webkit-transform: rotateY(-180deg);
+  -moz-transform: rotateY(-180deg);
+  -o-transform: rotateY(-180deg);
+  transform: rotateY(-180deg);
+}
 
 .card img {
   border-radius: 8px;
@@ -68,11 +71,8 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-}
-
-.card .card-back {
-  transform: rotateY(-180deg);
 }
 
 .card-matched {
