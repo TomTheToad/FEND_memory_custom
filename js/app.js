@@ -58,11 +58,36 @@ function addClock() {
   }
 }
 
+// Time for last match made
+let timeLastMatch = 0;
+
+function resetTimeLastMatch() {
+  timeLastMatch = 0;
+}
+
+function getTimeLastMatch() {
+  let returnTime = Date.now - timeLastMatch;
+  resetTimeLastMatch();
+  return returnTime;
+}
+
 // Store individual game items
 // A game item is an object
 let gameItems = [];
 
 /* Game build functions */
+let activeCards = [];
+
+// Add items to active
+function populateActiveCards() {
+  activeCards = [];
+  if (gameItems) {
+    for (item of gameItems) {
+      activeCards.push(item.id);
+    }
+  }
+}
+
 // Populate gameItems
 function createGameItems(array) {
   let index;
@@ -76,8 +101,8 @@ function createGameItems(array) {
     }
     const newGameItem = new GameItem(`card${i}`, array[index]);
     gameItems.push(newGameItem);
-    activeCards.push(newGameItem.id);
   }
+  populateActiveCards();
 }
 
 function createGameBoardHTML() {
@@ -109,6 +134,14 @@ function dealDeck() {
   // console.log(`html: ${html}`);
 }
 
+// reset button even listener
+function addEventListenerResetButton() {
+  const button = document.getElementById('resetButton');
+  if (button) {
+    button.addEventListener('click', resetGame, false );
+  }
+}
+
 /* End Game Build Functions */
 /* Begin Game logic */
 
@@ -119,8 +152,33 @@ let moveCount = 0;
 // Stores the running active card list.
 // This is an attempt at creating a queue
 // This allows for the edge case in which rapid card selection occurs.
-let activeCards = [];
 let clickedCards = [];
+
+// SCORE
+let score = 0;
+let scoreBoard = document.getElementById('score');
+
+// reset score
+function resetScore() {
+  score = 0;
+  scoreBoard.textContent = "00";
+}
+
+// update score
+function updateScore() {
+  const elapsedTime = getTimeLastMatch();
+  if (elapsedTime < 5) {
+    score += 100;
+  } else if (elapsedTime < 10) {
+    score += 50;
+  } else {
+    score += 20;
+  }
+
+  if (scoreBoard) {
+    scoreBoard.textContent = `${score}`;
+  }
+}
 
 /* Card manipulation function */
 function showCard(card) {
@@ -170,6 +228,7 @@ function checkForMatch() {
   if (card1.id === card2.id) {
     hideCard(card1);
   } else if (card1.childNodes[3].innerHTML === card2.childNodes[3].innerHTML) {
+    updateScore();
     // assign matched
     assignCardMatched(card1);
     assignCardMatched(card2);
@@ -217,15 +276,30 @@ function addEventListenersToCards() {
   }
 }
 
+// Game reset
+function resetGame() {
+  console.log("reset requested");
+  clock.stop();
+  clock.reset();
+  resetScore();
+  populateActiveCards();
+  clickedCards = [];
+  shuffleDeck();
+  dealDeck();
+  addEventListenersToCards();
+}
+
 /* End Game Logic */
 
 /* Runtime Function */
 function setUpGameBoard() {
+  resetTimeLastMatch();
   addClock();
   createGameItems(selectedTheme.images);
   shuffleDeck();
   dealDeck();
   addEventListenersToCards();
+  addEventListenerResetButton();
 }
 
 // TODO: Better name?

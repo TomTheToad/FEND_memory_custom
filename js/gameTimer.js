@@ -61,5 +61,6 @@ function GameTimer(domElement) {
 
   this.reset = function() {
     time = 0;
+    domElement.textContent = "00 : 00 . 00";
   };
 }
