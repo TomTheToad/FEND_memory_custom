@@ -45,6 +45,29 @@ function GameItem(id, image) {
   }
 }
 
+// Timer Constructor
+// function GameTimer(id) {
+//   this.id = name;
+//   this.time = 0;
+//   this.isRunning = false;
+//   this.timerHtml = `<div id="${this.name}"></div>`;
+//   this.start = function() {
+//     this.isRunning = true;
+//     while (this.isRunning) {
+//       this.time = Date.now(); - this.time;
+//     }
+//   }
+//   this.stop = function() {
+//     this.isRunning = false;
+//   }
+//   this.getTimer = function() {
+//     return this.time;
+//   }
+//   this.resetTimer = function() {
+//     this.time = 0;
+//   }
+// }
+
 /* End Game Custructors */
 /* Begin Game Setup */
 
