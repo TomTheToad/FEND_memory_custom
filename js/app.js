@@ -45,31 +45,18 @@ function GameItem(id, image) {
   }
 }
 
-// Timer Constructor
-// function GameTimer(id) {
-//   this.id = name;
-//   this.time = 0;
-//   this.isRunning = false;
-//   this.timerHtml = `<div id="${this.name}"></div>`;
-//   this.start = function() {
-//     this.isRunning = true;
-//     while (this.isRunning) {
-//       this.time = Date.now(); - this.time;
-//     }
-//   }
-//   this.stop = function() {
-//     this.isRunning = false;
-//   }
-//   this.getTimer = function() {
-//     return this.time;
-//   }
-//   this.resetTimer = function() {
-//     this.time = 0;
-//   }
-// }
-
 /* End Game Custructors */
 /* Begin Game Setup */
+
+// clock
+let clock;
+
+function addClock() {
+  let clockDiv = document.getElementById('clock');
+  if(clockDiv) {
+    clock = new GameTimer(clockDiv);
+  }
+}
 
 // Store individual game items
 // A game item is an object
@@ -192,6 +179,7 @@ function checkForMatch() {
     console.log(activeCards);
     // check for win condition
     if (activeCards.length === 0) {
+      clock.stop();
       console.log("WINNER!");
     }
   } else {
@@ -204,6 +192,7 @@ function cardClicked(card) {
   console.log(`card clicked: ${card.id}`);
   let index = activeCards.indexOf(`${card.id}`);
   console.log(`index: ${index}`);
+  clock.start();
 
   if (index !== null) {
     clickedCards.push(card);
@@ -232,6 +221,7 @@ function addEventListenersToCards() {
 
 /* Runtime Function */
 function setUpGameBoard() {
+  addClock();
   createGameItems(selectedTheme.images);
   shuffleDeck();
   dealDeck();

@@ -1,15 +1,15 @@
 /* This code adapted from a video tutorial by Saad
   url: https://www.youtube.com/watch?v=jRhB1IG7uAw&t=1234s */
 
-function GameTimer() {
+function GameTimer(domElement) {
   let time = 0;
   let interval;
   let offset;
 
   function update() {
     time += delta();
-    let formattedTime = timeFormatter(time);
-    console.log(formattedTime);
+    // let formattedTime = timeFormatter(time);
+    domElement.textContent = timeFormatter(time);
   }
   function delta() {
     let now = Date.now()
