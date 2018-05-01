@@ -117,3 +117,25 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+@media screen and (max-width: 1070px) {
+  #deck {
+    grid-gap: 1em;
+  }
+
+  #wrapper {
+    grid-template-areas: "board" "panel";
+  }
+}
+@media screen and (max-width: 880px) {
+  .card-container {
+    width: 80px;
+    height: 80px;
+    perspective: 400px;
+  }
+
+  .card img {
+    width: 80px;
+    height: 80px;
+  }
+}
