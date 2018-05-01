@@ -11,6 +11,7 @@ function GameTimer(domElement) {
     // let formattedTime = timeFormatter(time);
     domElement.textContent = timeFormatter(time);
   }
+
   function delta() {
     let now = Date.now()
     let timePassed = now - offset;
@@ -57,10 +58,16 @@ function GameTimer(domElement) {
       interval = null;
       this.isRunning = false;
     }
-  };
+  }
 
   this.reset = function() {
     time = 0;
     domElement.textContent = "00 : 00 . 00";
-  };
+  }
+
+  this.getCurrentTimeSeconds = function() {
+    let returnTime = new Date(time).getSeconds();
+    return returnTime;
+  }
+
 }

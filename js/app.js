@@ -49,12 +49,12 @@ function GameItem(id, image) {
 /* Begin Game Setup */
 
 // clock
-let clock;
+let clock = addClock();
 
 function addClock() {
   let clockDiv = document.getElementById('clock');
   if(clockDiv) {
-    clock = new GameTimer(clockDiv);
+    return new GameTimer(clockDiv);
   }
 }
 
@@ -62,12 +62,16 @@ function addClock() {
 let timeLastMatch = 0;
 
 function resetTimeLastMatch() {
-  timeLastMatch = 0;
+  let newTime = clock.getCurrentTimeSeconds();
+  if (newTime) {
+    timeLastMatch = newTime;
+  }
 }
 
 function getTimeLastMatch() {
-  let returnTime = Date.now - timeLastMatch;
-  resetTimeLastMatch();
+  let newTime = clock.getCurrentTimeSeconds();
+  let returnTime = newTime - timeLastMatch;
+  timeLastMatch = newTime;
   return returnTime;
 }
 
@@ -167,12 +171,15 @@ function resetScore() {
 // update score
 function updateScore() {
   const elapsedTime = getTimeLastMatch();
+  console.log(`elapsedTime: ${elapsedTime}`);
   if (elapsedTime < 5) {
     score += 100;
   } else if (elapsedTime < 10) {
     score += 50;
-  } else {
+  } else if (elapsedTime < 20) {
     score += 20;
+  } else {
+    score += 10;
   }
 
   if (scoreBoard) {
