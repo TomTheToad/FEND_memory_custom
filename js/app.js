@@ -26,6 +26,14 @@ const carnivalTheme = {
 // Fields - Themes //
 let selectedTheme = carnivalTheme;
 
+function setThemeBackground() {
+  let body = document.querySelector('body');
+  let bg = selectedTheme.backgroundImage;
+  if (body && bg) {
+    body.style.backgroundImage = `url(../images/themes/${bg})`;
+  }
+}
+
 // gameItem constructor
 // TODO: move this to it's own file and include
 function GameItem(id, image) {
@@ -116,6 +124,8 @@ function createGameBoardHTML() {
   };
   return html;
 }
+
+// TODO: one function for game setup.
 
 // orginal function here: Shuffle function from http://stackoverflow.com/a/2450976
 // This function was a given function in the Udacity starter code.
@@ -303,6 +313,7 @@ function setUpGameBoard() {
   resetTimeLastMatch();
   addClock();
   createGameItems(selectedTheme.images);
+  setThemeBackground();
   shuffleDeck();
   dealDeck();
   addEventListenersToCards();
