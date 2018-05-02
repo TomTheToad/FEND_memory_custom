@@ -5,6 +5,28 @@ body {
   height: 100%;
 }
 
+button {
+  display: inline-block;
+  -webkit-border-radius: 0.12;
+  -moz-border-radius: 0.12;
+  border-radius: 0.12px;
+  box-sizing: border-box;
+  padding: 0.5em;
+  margin: 0;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 15px;
+  background: #4797cc;
+  /* padding: 5px 10px 5px 10px; */
+  text-decoration: none;
+}
+
+button:hover {
+  cursor: pointer;
+  color: black;
+  background-color: white;
+}
+
 #panel {
   template-area: panel;
   font-size: 40px;
@@ -40,6 +62,7 @@ body {
   border-radius: 10px;
   height: 100%;
   width: 100%;
+  cursor: pointer;
   transform-style: preserve-3d;
   transition: transform 1s;
   /* transform: rotateY(-180); */
