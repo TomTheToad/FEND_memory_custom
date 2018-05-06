@@ -28,6 +28,25 @@ function GameItem(id, image) {
   }
 }
 
+// TODO: move html to another file or keep hidden in index
+function winScreenHTML(score, numberMoves, numStars) {
+
+  const starImage = `<span><img src="../images/themes/${selectedTheme.starImage}"></span>`
+  let starImages;
+  for (let i = 0; i < numStars; i++) {
+    starImages = starImages + starImage;
+  }
+  // HTML to be transfered to a template
+  let html =
+  `<div id="win-banner">
+    <h3 id="score">${score}</h3>
+    <h4 id="num-moves">${numberMoves}</h4>
+    <div id="stars">${starImages}</div>
+  </div>`
+
+  return html;
+}
+
 /* End Game Custructors */
 /* Begin Game Setup */
 
@@ -120,6 +139,7 @@ function shuffleDeck() {
 
 function dealDeck() {
   let html = createGameBoardHTML();
+  // TODO: make this a function
   let targetClass = document.querySelector('#deck');
   targetClass.innerHTML = html;
   // console.log(`html: ${html}`);
@@ -190,6 +210,15 @@ function updateScore() {
   }
 }
 
+// TODO: better function name
+// winScreenHTML(score, numberMoves, numStars)
+// reset button, score & star logic
+function doWin() {
+  let html = winScreenHTML(score, moveCount, 3);
+  let targetClass = document.querySelector('#deck');
+  targetClass.innerHTML = html;
+}
+
 /* Card manipulation functions */
 function showCard(card) {
   if (!card.classList.contains("flipped")) {
@@ -250,6 +279,7 @@ function checkForMatch() {
     if (activeCards.length === 0) {
       clock.stop();
       console.log("WINNER!");
+      doWin();
     }
   } else {
     console.log("no match");

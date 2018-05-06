@@ -11,7 +11,8 @@ const carnivalTheme = {
     "carnival/carnival-cartoon-character-disney-203561.jpg"
   ],
   backgroundImage: "carnival/photo-1514031231291-fee925070a61.jpg",
-  cardFront: "carnival/card-front-kevin-jarrett-561805-unsplash.jpg"
+  cardFront: "carnival/card-front-kevin-jarrett-561805-unsplash.jpg",
+  starImage: "carnival/star.png"
 };
 
 const nycTheme = {
@@ -26,7 +27,8 @@ const nycTheme = {
     "nyc/architecture-buildings-city-53212.jpg"
   ],
   backgroundImage: "nyc/bg-architecture-bridge-brooklyn-bridge-236451.jpg",
-  cardFront: "nyc/cardFront-above-abstract-architecture-450596.jpg"
+  cardFront: "nyc/cardFront-above-abstract-architecture-450596.jpg",
+  starImage: "nyc/star.png"
 };
 
 /* End Theme Coding */
