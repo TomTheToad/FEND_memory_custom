@@ -192,27 +192,26 @@ function updateScore() {
 
 // win sequence
 // TODO: refactor and simplify
-function showWinScreen() {
+function setGameBoardOpacity(opacity) {
   let gameBoard = document.getElementById('game-board');
-  let winScreen = document.getElementById('win-screen');
-  // this may not be necessary
-  let winScreenBg = document.getElementById('win-screen-bg');
+  gameBoard.style.opacity = opacity;
+}
 
-  gameBoard.style.opacity = 0;
-  winScreenBg.style.opacity = 1;
-  winScreen.style.opacity = 1;
+function setWinScreenOpacity(opacity) {
+  let winScreenBg = document.getElementById('win-screen-bg');
+  winScreenBg.style.opacity = opacity;
+  winScreenBg.childNodes[1].style.opacity = opacity;
+}
+
+function showWinScreen() {
+  setGameBoardOpacity(0);
+  setWinScreenOpacity(1);
 }
 
 // hide win screen() {
 function hideWinScreen() {
-  let gameBoard = document.getElementById('game-board');
-  let winScreen = document.getElementById('win-screen');
-  // this may not be necessary
-  let winScreenBg = document.getElementById('win-screen-bg');
-
-  gameBoard.style.opacity = 1;
-  winScreenBg.style.opacity = 0;
-  winScreen.style.opacity = 0;
+  setGameBoardOpacity(1);
+  setWinScreenOpacity(0);
 }
 
 /* Card manipulation functions */
