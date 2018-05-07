@@ -211,4 +211,9 @@ body {
     width: 80px;
     height: 80px;
   }
+
+  #win-screen-bg {
+    height: 370px;
+    width: 370px;
+  }
 }
