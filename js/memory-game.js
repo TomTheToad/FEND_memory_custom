@@ -190,6 +190,31 @@ function updateScore() {
   }
 }
 
+// win sequence
+// TODO: refactor and simplify
+function showWinScreen() {
+  let gameBoard = document.getElementById('game-board');
+  let winScreen = document.getElementById('win-screen');
+  // this may not be necessary
+  let winScreenBg = document.getElementById('win-screen-bg');
+
+  gameBoard.style.opacity = 0;
+  winScreenBg.style.opacity = 1;
+  winScreen.style.opacity = 1;
+}
+
+// hide win screen() {
+function hideWinScreen() {
+  let gameBoard = document.getElementById('game-board');
+  let winScreen = document.getElementById('win-screen');
+  // this may not be necessary
+  let winScreenBg = document.getElementById('win-screen-bg');
+
+  gameBoard.style.opacity = 1;
+  winScreenBg.style.opacity = 0;
+  winScreen.style.opacity = 0;
+}
+
 /* Card manipulation functions */
 function showCard(card) {
   if (!card.classList.contains("flipped")) {
@@ -250,6 +275,7 @@ function checkForMatch() {
     if (activeCards.length === 0) {
       clock.stop();
       console.log("WINNER!");
+      showWinScreen();
     }
   } else {
     console.log("no match");
@@ -298,6 +324,7 @@ function resetGame() {
   dealDeck();
   addEventListenersToCards();
   addEventListenerThemeButtons();
+  hideWinScreen();
 }
 /* End Game Logic */
 
@@ -327,6 +354,5 @@ function setNewTheme(theme) {
   }
 }
 
-// TODO: Better name?
 /* Intialize Game */
 setUpGameBoard();
