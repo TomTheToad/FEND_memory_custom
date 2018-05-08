@@ -8,7 +8,6 @@ function GameTimer(domElement) {
 
   function update() {
     time += delta();
-    // let formattedTime = timeFormatter(time);
     domElement.textContent = timeFormatter(time);
   }
 
@@ -43,7 +42,6 @@ function GameTimer(domElement) {
   this.isRunning = false;
 
   this.start = function() {
-    console.log("timer started");
     if(!this.isRunning) {
       interval = setInterval(update, 10);
       offset = Date.now();
@@ -52,7 +50,6 @@ function GameTimer(domElement) {
   }
 
   this.stop = function() {
-    console.log("timer stopped");
     if(this.isRunning) {
       clearInterval(interval);
       interval = null;

@@ -1,36 +1,5 @@
-// Fields - Themes //
-let selectedTheme = carnivalTheme;
 
-function setThemeBackground() {
-  let body = document.querySelector('body');
-  let bg = selectedTheme.backgroundImage;
-  if (body && bg) {
-    body.style.backgroundImage = `url(../images/themes/${bg})`;
-  }
-}
-
-// gameItem constructor
-// TODO: move this to it's own file and include
-function GameItem(id, image) {
-  this.id = id;
-  this.image = image;
-  this.getHTML = function() {
-    return `<div class="card-container">
-      <div class="card" id="${this.id}">
-        <figure class="card-front">
-          <img src="../images/themes/${selectedTheme.cardFront}" alt="top">
-        </figure>
-        <figure class="card-back">
-          <img src="../images/themes/${this.image}" alt="hidden">
-        </figure>
-      </div>
-    </div>`;
-  }
-}
-
-/* End Game Custructors */
 /* Begin Game Setup */
-
 function addClock() {
   let clockDiv = document.getElementById('clock');
   if(clockDiv) {
@@ -78,6 +47,7 @@ function populateActiveCards() {
 
 // Populate gameItems
 function createGameItems(array) {
+  console.log(`array: ${array}`);
   let index;
   // allow for duplicate items without array duplicates
   let arraySize = array.length;
@@ -226,7 +196,6 @@ function hideWinScreen() {
   setWinScreenZIndex(-1000);
 }
 
-// TODO simplify with class element
 // childNodes star1 = 1, star2 = 3, star3 = 5
 function setStars(numStars) {
   let stars = document.getElementById('stars');
