@@ -44,5 +44,7 @@ FEND_memory_custom
  </code>
  </pre>
  
- <h3>Known Bugs</h3>
- <p>I have been tracking a few small issues. One issue in which an odd sequence of clicks may cause a matched card to flip back. I believe this is a race condition. The other item that comes to mind is the use of seconds returned from the clock object. This may lead to an inaccurate bonus if a move takes minutes as opposed to seconds."
+<h3>Known Bugs</h3>
+<p>I have been tracking a few small issues. One issue in which an odd sequence of clicks may cause a matched card to flip back. I believe this is a race condition. The other item that comes to mind is the use of seconds returned from the clock object. This may lead to an inaccurate bonus if a move takes minutes as opposed to seconds."</p>
+  
+<p>One of the bigger issues I've been having is with the Udacity supplied shuffle function. The cards are not shuffled very well. They tend to appear in the same positions more often than not. </p>
