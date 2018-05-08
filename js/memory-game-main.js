@@ -60,6 +60,7 @@ function updateScore() {
 // Constants to prevent multiple dom calls
 const gameBoard = document.getElementById('game-board');
 const winScreenBg = document.getElementById('win-screen-bg');
+const stars = document.getElementById('stars');
 
 // Opacity and zIndex functions to support showing, make active win screen
 function setGameBoardOpacity(opacity) {
@@ -89,26 +90,39 @@ function hideWinScreen() {
   setWinScreenZIndex(-1000);
 }
 
-// Set number of stars to display
+
+// Hide star 1, 2, or 3
 // ChildNodes star1 = 1, star2 = 3, star3 = 5
-function setStars(numStars) {
-  let stars = document.getElementById('stars');
-  if(stars) {
-    if (numStars >= 3) {
-      stars.childNodes[1].style.opacity = 1;
-      stars.childNodes[3].style.opacity = 1;
-      stars.childNodes[5].style.opacity = 1;
-    } else if (numStars === 2 ) {
-      stars.childNodes[1].style.opacity = 1;
-      stars.childNodes[3].style.opacity = 1;
-      stars.childNodes[5].style.opacity = 0.4;
-    } else {
-      stars.childNodes[1].style.opacity = 1;
+function hideStar(whichStar) {
+  switch (whichStar) {
+    case 1:
+      stars.childNodes[1].style.opacity = 0.4;
+      break;
+    case 2:
       stars.childNodes[3].style.opacity = 0.4;
+      break;
+    case 3:
       stars.childNodes[5].style.opacity = 0.4;
-    }
-  } else {
-    console.log("stars element not found");
+      break;
+    default:
+      break;
+  }
+}
+
+function showStars() {
+  stars.childNodes[1].style.opacity = 1;
+  stars.childNodes[3].style.opacity = 1;
+  stars.childNodes[5].style.opacity = 1;
+}
+
+// Check moveCount for star threshholds
+function checkMoveCount() {
+  if (moveCount > 32) {
+    hideStar(3);
+  } else if (moveCount > 42) {
+    hideStar(2);
+  } else if (moveCount > 60) {
+    hideStar(1);
   }
 }
 
@@ -153,14 +167,6 @@ function getFinalScore() {
     setWInTime(100);
   } else {
     setWinTime(0);
-  }
-
-  if (finalScore > 650) {
-    setStars(3);
-  } else if (finalScore > 550) {
-    setStars(2);
-  } else {
-    setStars(1);
   }
 
   setFinalScore(finalScore);
@@ -236,6 +242,7 @@ function checkForMatch() {
 function cardClicked(card) {
   let index = activeCards.indexOf(`${card.id}`);
   clock.start();
+  checkMoveCount();
 
   if (index !== null) {
     clickedCards.push(card);
@@ -265,6 +272,7 @@ function resetGame() {
   clock.stop();
   clock.reset();
   resetScore();
+  showStars();
   moveCount = 0;
   populateActiveCards();
   clickedCards = [];

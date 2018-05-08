@@ -5,7 +5,7 @@
   major dependencies:   memory-game-item-constructor.js,
                         index.html
 
-  Please see the README file for overall description of the memory game. 
+  Please see the README file for overall description of the memory game.
  */
 
 // Store individual game items
@@ -27,7 +27,6 @@ function populateActiveCards() {
 
 // Populate gameItems
 function createGameItems(array) {
-  console.log(`array: ${array}`);
   let index;
   // allow for duplicate items without array duplicates
   let arraySize = array.length;
