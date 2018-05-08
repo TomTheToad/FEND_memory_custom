@@ -1,3 +1,13 @@
+/* Written by Victor Asselta
+  This file contains the necessary functions and fields for the
+  basic build and reset of the memory game.
+
+  major dependencies:   memory-game-item-constructor.js,
+                        index.html
+
+  Please see the README file for overall description of the memory game. 
+ */
+
 // Store individual game items
 // A game item is an object
 let gameItems = [];

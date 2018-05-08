@@ -1,12 +1,22 @@
-/* Main game logic
-dependencies:
+/* Written by Victor Asselta
+
+This is the MAIN file for the memory game application.
+
+This file includes all the game specific logic and major fields necessary
+for the proper running of the memory game.
+
+Dependencies:
   memory-game-theme-packs.js
   memory-game-theme-functions.js
   memory-game-item-constructor.js
   memory-game-timer.js
   memory-game-clock-functions.js
   memory-game-build-functions.js
-*/
+  index.html
+  images folder with basic and theme images
+
+  Please see the README file for overall description of the memory game.
+ */
 
 /* Begin Game logic */
 // Fields

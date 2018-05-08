@@ -1,3 +1,11 @@
+/* Written by Victor Asselta
+  This model file contains the theme item objects used to build out the
+  memory game. Each object contains the necessary images for the individual
+  themes.
+
+  Please see the README file for overall description of the memory game.
+ */
+
 // Theme packs //
 const carnivalTheme = {
   images: [

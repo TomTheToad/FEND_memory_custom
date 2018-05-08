@@ -1,3 +1,13 @@
+/* Written by Victor Asselta
+  This file contains the basic, independant timer code for a basic stopwatch.
+
+  This file does not have any dependencies and what adapted from a tutorial
+  for use in this memory game. Please see the link below for the original
+  tutorial.
+
+  Please see the README file for overall description of the memory game.
+ */
+
 /* This code adapted from a video tutorial by Saad
   url: https://www.youtube.com/watch?v=jRhB1IG7uAw&t=1234s */
 

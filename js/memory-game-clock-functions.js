@@ -1,3 +1,13 @@
+/* Written by Victor Asselta
+  This file contains the memory game specific functions to manipulate and
+  query the game timer.
+
+  Dependencies:   memory-game-timer.js,
+                  index.html
+
+  Please see the README file for overall description of the memory game. 
+ */
+
 // Clock functions
 // - Game timer used to display game elapse time to user and determine points
 function addClock() {

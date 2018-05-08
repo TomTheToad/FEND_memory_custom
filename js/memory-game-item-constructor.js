@@ -1,3 +1,11 @@
+/* Written by Victor Asselta
+  This file contains the GameItem constructor. This object is necessary
+  for building the array of items used to build and populate the memory
+  game board.
+
+  Please see the README file for overall description of the memory game. 
+ */
+
 function GameItem(id, image) {
   this.id = id;
   this.image = image;

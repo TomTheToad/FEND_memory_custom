@@ -1,3 +1,12 @@
+/* Written by Victor Asselta
+  This file contains the field for tracking the users selected theme and
+  a helper function for setting the background them image.
+
+  Please see the README file for overall description of the memory game.
+ */
+
+ // TODO: Is this file needed? Should this be moved back to main?
+
 // Field which stores current theme object
 let selectedTheme = carnivalTheme;
 
