@@ -1,133 +1,14 @@
+/* Main game logic
+dependencies:
+  memory-game-theme-packs.js
+  memory-game-theme-functions.js
+  memory-game-item-constructor.js
+  memory-game-timer.js
+  memory-game-clock-functions.js
+  memory-game-build-functions.js
+*/
 
-/* Begin Game Setup */
-function addClock() {
-  let clockDiv = document.getElementById('clock');
-  if(clockDiv) {
-    return new GameTimer(clockDiv);
-  }
-}
-
-// clock
-let clock = addClock();
-
-// Time for last match made
-let timeLastMatch = 0;
-
-// TODO: use milliseconds in the case that a move takes more than a minute.
-function resetTimeLastMatch() {
-  let newTime = clock.getCurrentTimeSeconds();
-  if (newTime) {
-    timeLastMatch = newTime;
-  }
-}
-
-function getTimeLastMatch() {
-  let newTime = clock.getCurrentTimeSeconds();
-  let returnTime = newTime - timeLastMatch;
-  timeLastMatch = newTime;
-  return returnTime;
-}
-
-// Store individual game items
-// A game item is an object
-let gameItems = [];
-
-/* Game build functions */
-let activeCards = [];
-
-// Add items to active
-function populateActiveCards() {
-  activeCards = [];
-  if (gameItems) {
-    for (item of gameItems) {
-      activeCards.push(item.id);
-    }
-  }
-}
-
-// Populate gameItems
-function createGameItems(array) {
-  console.log(`array: ${array}`);
-  let index;
-  // allow for duplicate items without array duplicates
-  let arraySize = array.length;
-  for (let i = 0; i < (array.length * 2); i++) {
-    index = i;
-    // create the new gameItems
-    if (i >= arraySize) {
-      index = i - arraySize;
-    }
-    const newGameItem = new GameItem(`card${i}`, array[index]);
-    gameItems.push(newGameItem);
-  }
-  populateActiveCards();
-}
-
-function createGameBoardHTML() {
-  let html = "";
-  for(let item of gameItems) {
-    html = html + item.getHTML();
-  };
-  return html;
-}
-
-// TODO: one function for game setup.
-
-// orginal function here: Shuffle function from http://stackoverflow.com/a/2450976
-// This function was a given function in the Udacity starter code.
-// TODO: Shuffle not really working very well.
-function shuffleDeck() {
-    let currentIndex = selectedTheme.images.length, temporaryValue, randomIndex;
-
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = gameItems[currentIndex];
-        gameItems[currentIndex] = gameItems[randomIndex];
-        gameItems[randomIndex] = temporaryValue;
-    }
-}
-
-function dealDeck() {
-  let html = createGameBoardHTML();
-  let targetClass = document.querySelector('#deck');
-  targetClass.innerHTML = html;
-}
-
-// reset button even listener
-function addEventListenerResetButton() {
-  const button = document.getElementById('resetButton');
-  if (button) {
-    button.addEventListener('click', resetGame, false );
-  }
-}
-
-function addEventListenerPlayAgainButton() {
-  const button = document.getElementById('play-again');
-  if (button) {
-    button.addEventListener('click', resetGame, false );
-  }
-}
-
-function addEventListenerThemeButtons() {
-  const carnivalButton = document.getElementById('theme1');
-  const nycButton = document.getElementById('theme2');
-  if (carnivalButton) {
-    carnivalButton.addEventListener('click', function() {
-      setNewTheme(carnivalTheme);
-    }, false);
-  }
-
-  if (nycButton) {
-    nycButton.addEventListener('click', function() {
-      setNewTheme(nycTheme);
-    }, false);
-  }
-}
-
-/* End Game Build Functions */
 /* Begin Game logic */
-
 // Fields
 let matchCount = 0;
 let moveCount = 0;
@@ -141,13 +22,13 @@ let clickedCards = [];
 let score = 0;
 let scoreBoard = document.getElementById('score');
 
-// reset score
+// Reset score
 function resetScore() {
   score = 0;
   scoreBoard.textContent = "00";
 }
 
-// update score
+// Update score
 function updateScore() {
   const elapsedTime = getTimeLastMatch();
   if (elapsedTime < 5) {
@@ -165,11 +46,12 @@ function updateScore() {
   }
 }
 
-// win sequence
+// Win sequence
+// Constants to prevent multiple dom calls
 const gameBoard = document.getElementById('game-board');
 const winScreenBg = document.getElementById('win-screen-bg');
 
-// TODO: refactor and simplify
+// Opacity and zIndex functions to support showing, make active win screen
 function setGameBoardOpacity(opacity) {
   gameBoard.style.opacity = opacity;
 }
@@ -183,20 +65,22 @@ function setWinScreenZIndex(zIndex) {
   winScreenBg.style.zIndex = zIndex;
 }
 
+// Show win screen macro
 function showWinScreen() {
   setGameBoardOpacity(0);
   setWinScreenOpacity(1);
   setWinScreenZIndex(1000);
 }
 
-// hide win screen() {
+// Hide win screen macro {
 function hideWinScreen() {
   setGameBoardOpacity(1);
   setWinScreenOpacity(0);
   setWinScreenZIndex(-1000);
 }
 
-// childNodes star1 = 1, star2 = 3, star3 = 5
+// Set number of stars to display
+// ChildNodes star1 = 1, star2 = 3, star3 = 5
 function setStars(numStars) {
   let stars = document.getElementById('stars');
   if(stars) {
@@ -218,6 +102,7 @@ function setStars(numStars) {
   }
 }
 
+// Set final score detail in the win screen
 function setFinalScore(finalScore) {
   let finalScoreElement = document.getElementById('win-final-score');
   if(finalScoreElement) {
@@ -227,6 +112,7 @@ function setFinalScore(finalScore) {
   }
 }
 
+// Set number of moves detail in the win screen
 function setWinMoves(minusPoints) {
   let winMoves = document.getElementById('win-moves');
   if (winMoves) {
@@ -234,6 +120,7 @@ function setWinMoves(minusPoints) {
   }
 }
 
+// Set time detail in the win screen
 function setWinTime(plusPoints) {
   let winTime = document.getElementById('win-time');
   if (winTime) {
@@ -241,6 +128,7 @@ function setWinTime(plusPoints) {
   }
 }
 
+// Determine final score outcome
 // Final score (final score tally after win) calculator
 function getFinalScore() {
   let minusMoves = moveCount * 5;
@@ -281,12 +169,14 @@ function hideCard(card) {
   }
 }
 
+// Add css showing match which displays green border
 function assignCardMatched(card) {
   if (!card.classList.contains("card-matched")) {
     card.classList.toggle("card-matched");
   }
 }
 
+// Hold cards open for better user experience
 function hideCards(card1, card2) {
   setTimeout( function(){
     hideCard(card1)
@@ -296,6 +186,7 @@ function hideCards(card1, card2) {
   }, 1000);
 }
 
+// Remove card from active play due to match
 function removeCardFromPlay(card) {
   let index = activeCards.indexOf('card.id');
   if (index) {
@@ -303,6 +194,7 @@ function removeCardFromPlay(card) {
   }
 }
 
+// Check next two selected cards for match
 function checkForMatch() {
   // "Take" the two top cards
   let card1 = clickedCards.shift();
@@ -330,6 +222,7 @@ function checkForMatch() {
   }
 }
 
+// Triggered function for card being selected
 function cardClicked(card) {
   let index = activeCards.indexOf(`${card.id}`);
   clock.start();
@@ -345,6 +238,7 @@ function cardClicked(card) {
   }
 }
 
+// Basic event listener for all cards to react to a click from user
 function addEventListenersToCards() {
   for (let i = 0; i < (selectedTheme.images.length * 2); i++) {
     let card = document.querySelector(`#card${i}`);
@@ -356,7 +250,7 @@ function addEventListenersToCards() {
   }
 }
 
-// Game reset
+// Game reset macro
 function resetGame() {
   clock.stop();
   clock.reset();
