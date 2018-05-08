@@ -26,7 +26,7 @@
 
 <pre>
 <code>
-customCardGame
+FEND_memory_custom
   |-- css
         |-- app.css
   |--images
