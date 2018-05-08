@@ -65,9 +65,22 @@ function GameTimer(domElement) {
     domElement.textContent = "00 : 00 . 00";
   }
 
+  this.getCurrentTime = function() {
+    return time;
+  }
+
   this.getCurrentTimeSeconds = function() {
     let returnTime = new Date(time).getSeconds();
     return returnTime;
+  }
+
+  // this.getCurrentTime = function() {
+  //   let returnTime = new Date(time);
+  //   return returnTime.getMilliseconds();
+  // }
+
+  this.getCurrentTimeFormatted = function() {
+    return timeFormatter(time);
   }
 
 }

@@ -31,9 +31,6 @@ function GameItem(id, image) {
 /* End Game Custructors */
 /* Begin Game Setup */
 
-// clock
-let clock = addClock();
-
 function addClock() {
   let clockDiv = document.getElementById('clock');
   if(clockDiv) {
@@ -41,9 +38,13 @@ function addClock() {
   }
 }
 
+// clock
+let clock = addClock();
+
 // Time for last match made
 let timeLastMatch = 0;
 
+// TODO: use milliseconds in the case that a move takes more than a minute.
 function resetTimeLastMatch() {
   let newTime = clock.getCurrentTimeSeconds();
   if (newTime) {
@@ -133,6 +134,13 @@ function addEventListenerResetButton() {
   }
 }
 
+function addEventListenerPlayAgainButton() {
+  const button = document.getElementById('play-again');
+  if (button) {
+    button.addEventListener('click', resetGame, false );
+  }
+}
+
 function addEventListenerThemeButtons() {
   const carnivalButton = document.getElementById('theme1');
   const nycButton = document.getElementById('theme2');
@@ -214,6 +222,79 @@ function hideWinScreen() {
   setWinScreenOpacity(0);
 }
 
+// childNodes star1 = 1, star2 = 3, star3 = 5
+function setStars(numStars) {
+  let stars = document.getElementById('stars');
+  if(stars) {
+    if (numStars >= 3) {
+      stars.childNodes[1].style.opacity = 1;
+      stars.childNodes[3].style.opacity = 1;
+      stars.childNodes[5].style.opacity = 1;
+    } else if (numStars === 2 ) {
+      stars.childNodes[1].style.opacity = 1;
+      stars.childNodes[3].style.opacity = 1;
+      stars.childNodes[5].style.opacity = 0.4;
+    } else {
+      stars.childNodes[1].style.opacity = 1;
+      stars.childNodes[3].style.opacity = 0.4;
+      stars.childNodes[5].style.opacity = 0.4;
+    }
+  } else {
+    console.log("stars element not found");
+  }
+}
+
+function setFinalScore(finalScore) {
+  let finalScoreElement = document.getElementById('win-final-score');
+  if(finalScoreElement) {
+    finalScoreElement.textContent = `${finalScore}`;
+  } else {
+    console.log("final score element not found");
+  }
+}
+
+function setWinMoves(minusPoints) {
+  let winMoves = document.getElementById('win-moves');
+  if (winMoves) {
+    winMoves.textContent = `Moves: ${moveCount} (-${minusPoints})`;
+  }
+}
+
+function setWinTime(plusPoints) {
+  let winTime = document.getElementById('win-time');
+  if (winTime) {
+    winTime.textContent = `Time: ${clock.getCurrentTimeFormatted()} (+${plusPoints})`;
+  }
+}
+
+// Final score (final score tally after win) calculator
+function getFinalScore() {
+  let minusMoves = moveCount * 5;
+  setWinMoves(minusMoves);
+  let finalScore = score - minusMoves;
+  let totalTime = clock.getCurrentTime();
+  console.log(`currentTime: ${totalTime}`);
+  if(totalTime < 60000) {
+    finalScore += 300;
+    setWinTime(300);
+  } else if(totalTime < 120000) {
+    finalScore += 100;
+    setWInTime(100);
+  } else {
+    setWinTime(0);
+  }
+
+  if (finalScore > 650) {
+    setStars(3);
+  } else if (finalScore > 550) {
+    setStars(2);
+  } else {
+    setStars(1);
+  }
+
+  setFinalScore(finalScore);
+}
+
 /* Card manipulation functions */
 function showCard(card) {
   if (!card.classList.contains("flipped")) {
@@ -275,6 +356,7 @@ function checkForMatch() {
       clock.stop();
       console.log("WINNER!");
       showWinScreen();
+      getFinalScore();
     }
   } else {
     console.log("no match");
@@ -291,6 +373,7 @@ function cardClicked(card) {
   if (index !== null) {
     clickedCards.push(card);
     console.log(`card added to clickedCards ${card.id}`);
+    moveCount++;
     showCard(card);
 
     if (clickedCards.length >= 2) {
@@ -317,6 +400,7 @@ function resetGame() {
   clock.stop();
   clock.reset();
   resetScore();
+  moveCount = 0;
   populateActiveCards();
   clickedCards = [];
   shuffleDeck();
@@ -338,6 +422,7 @@ function setUpGameBoard() {
   dealDeck();
   addEventListenersToCards();
   addEventListenerResetButton();
+  addEventListenerPlayAgainButton();
   addEventListenerThemeButtons();
 }
 
