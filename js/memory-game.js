@@ -199,27 +199,34 @@ function updateScore() {
 }
 
 // win sequence
+const gameBoard = document.getElementById('game-board');
+const winScreenBg = document.getElementById('win-screen-bg');
+
 // TODO: refactor and simplify
 function setGameBoardOpacity(opacity) {
-  let gameBoard = document.getElementById('game-board');
   gameBoard.style.opacity = opacity;
 }
 
 function setWinScreenOpacity(opacity) {
-  let winScreenBg = document.getElementById('win-screen-bg');
   winScreenBg.style.opacity = opacity;
   winScreenBg.childNodes[1].style.opacity = opacity;
+}
+
+function setWinScreenZIndex(zIndex) {
+  winScreenBg.style.zIndex = zIndex;
 }
 
 function showWinScreen() {
   setGameBoardOpacity(0);
   setWinScreenOpacity(1);
+  setWinScreenZIndex(1000);
 }
 
 // hide win screen() {
 function hideWinScreen() {
   setGameBoardOpacity(1);
   setWinScreenOpacity(0);
+  setWinScreenZIndex(-1000);
 }
 
 // childNodes star1 = 1, star2 = 3, star3 = 5
