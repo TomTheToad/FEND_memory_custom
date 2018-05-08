@@ -78,7 +78,6 @@ function populateActiveCards() {
 
 // Populate gameItems
 function createGameItems(array) {
-  console.log(`array: ${array}`);
   let index;
   // allow for duplicate items without array duplicates
   let arraySize = array.length;
@@ -123,7 +122,6 @@ function dealDeck() {
   let html = createGameBoardHTML();
   let targetClass = document.querySelector('#deck');
   targetClass.innerHTML = html;
-  // console.log(`html: ${html}`);
 }
 
 // reset button even listener
@@ -182,7 +180,6 @@ function resetScore() {
 // update score
 function updateScore() {
   const elapsedTime = getTimeLastMatch();
-  console.log(`elapsedTime: ${elapsedTime}`);
   if (elapsedTime < 5) {
     score += 100;
   } else if (elapsedTime < 10) {
@@ -229,6 +226,7 @@ function hideWinScreen() {
   setWinScreenZIndex(-1000);
 }
 
+// TODO simplify with class element
 // childNodes star1 = 1, star2 = 3, star3 = 5
 function setStars(numStars) {
   let stars = document.getElementById('stars');
@@ -280,7 +278,6 @@ function getFinalScore() {
   setWinMoves(minusMoves);
   let finalScore = score - minusMoves;
   let totalTime = clock.getCurrentTime();
-  console.log(`currentTime: ${totalTime}`);
   if(totalTime < 60000) {
     finalScore += 300;
     setWinTime(300);
@@ -306,14 +303,12 @@ function getFinalScore() {
 function showCard(card) {
   if (!card.classList.contains("flipped")) {
     card.classList.toggle("flipped");
-    console.log(`show card: ${card.id}`);
   }
 }
 
 function hideCard(card) {
   if (card.classList.contains("flipped")) {
     card.classList.toggle("flipped");
-    console.log(`hiding ${card.id}`);
   }
 }
 
@@ -336,7 +331,6 @@ function removeCardFromPlay(card) {
   let index = activeCards.indexOf('card.id');
   if (index) {
     activeCards.splice(index, 1);
-    console.log(`${card.id} removed from play`);
   }
 }
 
@@ -345,7 +339,6 @@ function checkForMatch() {
   let card1 = clickedCards.shift();
   let card2 = clickedCards.shift();
 
-  console.log(`checking cards ${card1.id} and ${card2.id}`);
   // Check to make sure the card has not been double clicked
   if (card1.id === card2.id) {
     hideCard(card1);
@@ -357,34 +350,27 @@ function checkForMatch() {
     // remove the cards from active play
     removeCardFromPlay(card1);
     removeCardFromPlay(card2);
-    console.log(activeCards);
     // check for win condition
     if (activeCards.length === 0) {
       clock.stop();
-      console.log("WINNER!");
       showWinScreen();
       getFinalScore();
     }
   } else {
-    console.log("no match");
     hideCards(card1, card2);
   }
 }
 
 function cardClicked(card) {
-  console.log(`card clicked: ${card.id}`);
   let index = activeCards.indexOf(`${card.id}`);
-  console.log(`index: ${index}`);
   clock.start();
 
   if (index !== null) {
     clickedCards.push(card);
-    console.log(`card added to clickedCards ${card.id}`);
     moveCount++;
     showCard(card);
 
     if (clickedCards.length >= 2) {
-      console.log('checking for match');
       checkForMatch();
     }
   }
@@ -403,7 +389,6 @@ function addEventListenersToCards() {
 
 // Game reset
 function resetGame() {
-  console.log("reset requested");
   clock.stop();
   clock.reset();
   resetScore();
@@ -435,7 +420,6 @@ function setUpGameBoard() {
 
 // Theme Button Actions
 function setNewTheme(theme) {
-  console.log(`requested theme: ${theme}`);
   if (selectedTheme != theme) {
     selectedTheme = theme;
     setUpGameBoard();

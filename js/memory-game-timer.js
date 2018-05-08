@@ -74,11 +74,6 @@ function GameTimer(domElement) {
     return returnTime;
   }
 
-  // this.getCurrentTime = function() {
-  //   let returnTime = new Date(time);
-  //   return returnTime.getMilliseconds();
-  // }
-
   this.getCurrentTimeFormatted = function() {
     return timeFormatter(time);
   }
