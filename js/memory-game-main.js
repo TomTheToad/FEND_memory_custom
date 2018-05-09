@@ -125,7 +125,7 @@ function resetMoveCount() {
   moveCounter.textContent = 0;
 }
 
-// Check moveCount for star threshholds
+// Check moveCount for star thresholds
 function checkMoveCount() {
   if (moveCount > 30 && moveCount < 40) {
     hideStar(3);
@@ -172,7 +172,7 @@ function getFinalScore() {
     setWinTime(300);
   } else if(totalTime < 120000) {
     finalScore += 100;
-    setWInTime(100);
+    setWinTime(100);
   } else {
     setWinTime(0);
   }
@@ -220,6 +220,11 @@ function removeCardFromPlay(card) {
 
 // Check next two selected cards for match
 function checkForMatch() {
+  // Increment move count
+  updateMoveCount();
+  // Check for star threshold
+  checkMoveCount();
+
   // "Take" the two top cards
   let card1 = clickedCards.shift();
   let card2 = clickedCards.shift();
@@ -253,8 +258,6 @@ function cardClicked(card) {
 
   if (index !== null) {
     clickedCards.push(card);
-    updateMoveCount();
-    checkMoveCount();
     showCard(card);
 
     if (clickedCards.length >= 2) {
