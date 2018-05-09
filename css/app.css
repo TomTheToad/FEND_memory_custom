@@ -217,6 +217,7 @@ h4 {
     grid-template-areas: "board" "panel";
   }
 }
+
 @media screen and (max-width: 880px) {
   .card-container {
     width: 80px;
@@ -232,5 +233,91 @@ h4 {
   #win-screen-bg {
     height: 370px;
     width: 370px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  body {
+    width: 100vw;
+  }
+
+  .button {
+    padding: 4px 8px;
+  }
+
+  .card-container {
+    width: 70px;
+    height: 70px;
+    perspective: 400px;
+  }
+
+  .card img {
+    width: 70px;
+    height: 70px;
+  }
+
+  #win-screen-bg {
+    height: 340px;
+    width: 340px;
+
+    z-index: -1;
+    color: white;
+    border: 0;
+    padding: 5px;
+  }
+
+  #panel {
+    font-size: 15px;
+    font-family: 'Gugi', cursive;
+    color: white;
+    padding: 2px;
+  }
+
+  #game-board {
+    border: 0px;
+    padding: 8px;
+  }
+
+@media screen and (max-width: 365px) {
+  body {
+    width: 100vw;
+  }
+
+  .button {
+    padding: 4px 8px;
+  }
+
+  .card-container {
+    width: 60px;
+    height: 60px;
+    perspective: 400px;
+  }
+
+  .card img {
+    width: 60px;
+    height: 60px;
+  }
+
+  #win-screen-bg {
+    height: 300px;
+    width: 300px;
+
+    z-index: -1;
+    color: white;
+    border: 0;
+    padding: 5px;
+  }
+
+  #panel {
+    font-size: 15px;
+    font-family: 'Gugi', cursive;
+    color: white;
+    padding: 2px;
+    border: 0px;
+  }
+
+  #game-board {
+    border: 0px;
+    padding: 8px;
   }
 }
