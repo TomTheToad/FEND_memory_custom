@@ -127,9 +127,11 @@ function resetMoveCount() {
 
 // Check moveCount for star thresholds
 function checkMoveCount() {
-  if (moveCount > 15 && moveCount < 25) {
+  if (moveCount > 15) {
     hideStar(3);
-  } else if (moveCount >= 25) {
+  }
+
+  if (moveCount > 25) {
     hideStar(2);
   }
 }
