@@ -9,7 +9,7 @@ To build a custom, dynamic memory card game from scratch, mostly.
 ## Description ##
 This memory card game is a browser based game which displays a four by four grid of game cards, a score, timer, and basic button controls for game reset and theme selection.The user "flips" cards, two at a time, revealing a theme related back image. This game was created to satisfy a Udacity Front End Nanodegree assignment.
 
-![alt text](images/memory-game-screen-shot.jpg "Memory Game New York Theme")
+![screen shot](images/memory-game-screen-shot.jpg "Memory Game New York Theme")
 
 The game currently displays two themes which can be selected by the user. The carnival theme is based on carnival rides, games, and associated images. The New York City game displays notable buildings and statues from New York City.
 
