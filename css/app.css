@@ -262,7 +262,7 @@ h4 {
 
     z-index: -1;
     color: white;
-    border: 0;
+    border: 0px;
     padding: 5px;
   }
 
@@ -271,10 +271,11 @@ h4 {
     font-family: 'Gugi', cursive;
     color: white;
     padding: 2px;
+    border: 2px;
   }
 
   #game-board {
-    border: 0px;
+    border: 1px;
     padding: 8px;
   }
 
@@ -317,7 +318,7 @@ h4 {
   }
 
   #game-board {
-    border: 0px;
+    border: 1px;
     padding: 8px;
   }
 }
