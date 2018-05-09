@@ -131,8 +131,6 @@ function checkMoveCount() {
     hideStar(3);
   } else if (moveCount > 40 && moveCount < 50) {
     hideStar(2);
-  } else if (moveCount > 50) {
-    hideStar(1);
   }
 }
 
