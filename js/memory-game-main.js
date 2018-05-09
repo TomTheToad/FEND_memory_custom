@@ -61,6 +61,7 @@ function updateScore() {
 const gameBoard = document.getElementById('game-board');
 const winScreenBg = document.getElementById('win-screen-bg');
 const stars = document.getElementById('stars');
+const moveCounter = document.getElementById('move-count');
 
 // Opacity and zIndex functions to support showing, make active win screen
 function setGameBoardOpacity(opacity) {
@@ -90,7 +91,6 @@ function hideWinScreen() {
   setWinScreenZIndex(-1000);
 }
 
-
 // Hide star 1, 2, or 3
 // ChildNodes star1 = 1, star2 = 3, star3 = 5
 function hideStar(whichStar) {
@@ -115,13 +115,23 @@ function showStars() {
   stars.childNodes[5].style.opacity = 1;
 }
 
+function updateMoveCount() {
+  moveCount++
+  moveCounter.textContent = moveCount;
+}
+
+function resetMoveCount() {
+  moveCount = 0;
+  moveCounter.textContent = 0;
+}
+
 // Check moveCount for star threshholds
 function checkMoveCount() {
-  if (moveCount > 32) {
+  if (moveCount > 30 && moveCount < 40) {
     hideStar(3);
-  } else if (moveCount > 42) {
+  } else if (moveCount > 40 && moveCount < 50) {
     hideStar(2);
-  } else if (moveCount > 60) {
+  } else if (moveCount > 50) {
     hideStar(1);
   }
 }
@@ -130,7 +140,7 @@ function checkMoveCount() {
 function setFinalScore(finalScore) {
   let finalScoreElement = document.getElementById('win-final-score');
   if(finalScoreElement) {
-    finalScoreElement.textContent = `${finalScore}`;
+    finalScoreElement.textContent = `Final Score: ${finalScore}`;
   } else {
     console.log("final score element not found");
   }
@@ -242,11 +252,11 @@ function checkForMatch() {
 function cardClicked(card) {
   let index = activeCards.indexOf(`${card.id}`);
   clock.start();
-  checkMoveCount();
 
   if (index !== null) {
     clickedCards.push(card);
-    moveCount++;
+    updateMoveCount();
+    checkMoveCount();
     showCard(card);
 
     if (clickedCards.length >= 2) {
@@ -273,7 +283,7 @@ function resetGame() {
   clock.reset();
   resetScore();
   showStars();
-  moveCount = 0;
+  resetMoveCount();
   populateActiveCards();
   clickedCards = [];
   shuffleDeck();
