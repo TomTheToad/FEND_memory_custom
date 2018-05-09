@@ -208,7 +208,7 @@ h4 {
   align-items: center;
 }
 
-@media screen and (max-width: 1070px) {
+@media screen and (max-width: 1151px) {
   #deck {
     grid-gap: 1em;
   }
